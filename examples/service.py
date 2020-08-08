@@ -60,7 +60,11 @@ class HelloWorld(pb2_grpc.HelloWorldServicer):
 def run():
     grpc_server = grpc.server(
         futures.ThreadPoolExecutor(max_workers=10),
-        # compression=grpc.Compression.Gzip   # 全局设置响应压缩
+        # compression=grpc.Compression.Gzip,   # 全局设置响应压缩
+        options=[   # 传输最大值的设置
+            ('grpc.max_send_message_length', 50 * 1024 * 1024),
+            ('grpc.max_receive_message_length', 50 * 1024 * 1024)
+        ]
     )
     pb2_grpc.add_HelloWorldServicer_to_server(HelloWorld(), grpc_server)
     grpc_server.add_insecure_port('[::]:50051')

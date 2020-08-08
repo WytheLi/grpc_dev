@@ -13,6 +13,11 @@ python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. hello_world.
 
 - 常用protobuf数据类型和pb文件
 
+- grpc状态码
+
+- metedata数据的传输、传输数据压缩设置、传输最大值设置
+> 由于grpc有传输大小阈值限制，默认阈值比较小。如果需要传输较大数据包时，需要修改阈值，否则会传输失败
+
 
 
 
