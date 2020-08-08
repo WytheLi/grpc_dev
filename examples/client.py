@@ -29,7 +29,8 @@ def run():
         response, call = client.show_msg.with_call(pb2.HelloGrpcReq(
             name='willi',
             age=23
-        ), metadata=(('client_key', 'client_value'),))
+        ), metadata=(('client_key', 'client_value'),),
+        compression=grpc.Compression.Gzip)
         print(response.result)
 
         headers = call.trailing_metadata()

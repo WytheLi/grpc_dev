@@ -26,6 +26,8 @@ class HelloWorld(pb2_grpc.HelloWorldServicer):
         print(headers[0].key, headers[0].value)
         context.set_trailing_metadata((('key1', 'value1'), ('key2', 'value2')))
 
+        context.set_compression(grpc.Compression.Gzip)  # 给单个响应设置压缩
+
         result = 'My name is %s, i am %s years old!' % (name, age)
         return pb2.HelloGrpcReply(result=result)
 
@@ -57,7 +59,8 @@ class HelloWorld(pb2_grpc.HelloWorldServicer):
 
 def run():
     grpc_server = grpc.server(
-        futures.ThreadPoolExecutor(max_workers=10)
+        futures.ThreadPoolExecutor(max_workers=10),
+        # compression=grpc.Compression.Gzip   # 全局设置响应压缩
     )
     pb2_grpc.add_HelloWorldServicer_to_server(HelloWorld(), grpc_server)
     grpc_server.add_insecure_port('[::]:50051')
