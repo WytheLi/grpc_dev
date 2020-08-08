@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x11hello_world.proto\x12\x04test\")\n\x0cHelloGrpcReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\" \n\x0eHelloGrpcReply\x12\x0e\n\x06result\x18\x01 \x01(\t\"\xa9\x01\n\x0cHelloTestReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x03\x12\x0c\n\x04\x64\x61ta\x18\x03 \x03(\t\x12.\n\x06\x64\x65tail\x18\x04 \x03(\x0b\x32\x1e.test.HelloTestReq.DetailEntry\x1a@\n\x0b\x44\x65tailEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.test.DetailValue:\x02\x38\x01\"K\n\x0b\x44\x65tailValue\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x03\x12\x0e\n\x06gender\x18\x03 \x01(\t\x12\x11\n\tis_active\x18\x04 \x01(\x08\"\x10\n\x0eHelloTestReply\"\x1d\n\rSendStreamReq\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\"!\n\x0fSendStreamReply\x12\x0e\n\x06result\x18\x01 \x01(\t2\xc6\x01\n\nHelloWorld\x12\x36\n\x08show_msg\x12\x12.test.HelloGrpcReq\x1a\x14.test.HelloGrpcReply\"\x00\x12\x41\n\x0fshow_detail_msg\x12\x12.test.HelloTestReq\x1a\x14.test.HelloTestReply\"\x00(\x01\x30\x01\x12=\n\x0bsend_stream\x12\x13.test.SendStreamReq\x1a\x15.test.SendStreamReply\"\x00\x30\x01\x62\x06proto3'
+  serialized_pb=b'\n\x11hello_world.proto\x12\x04test\")\n\x0cHelloGrpcReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\" \n\x0eHelloGrpcReply\x12\x0e\n\x06result\x18\x01 \x01(\t\"\xa9\x01\n\x0cHelloTestReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x03\x12\x0c\n\x04\x64\x61ta\x18\x03 \x03(\t\x12.\n\x06\x64\x65tail\x18\x04 \x03(\x0b\x32\x1e.test.HelloTestReq.DetailEntry\x1a@\n\x0b\x44\x65tailEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.test.DetailValue:\x02\x38\x01\"K\n\x0b\x44\x65tailValue\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x03\x12\x0e\n\x06gender\x18\x03 \x01(\t\x12\x11\n\tis_active\x18\x04 \x01(\x08\"\x10\n\x0eHelloTestReply\"\x1d\n\rSendStreamReq\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\"!\n\x0fSendStreamReply\x12\x0e\n\x06result\x18\x01 \x01(\t\"\x1d\n\rRecvStreamReq\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\"!\n\x0fRecvStreamReply\x12\x0e\n\x06result\x18\x01 \x01(\t2\x85\x02\n\nHelloWorld\x12\x36\n\x08show_msg\x12\x12.test.HelloGrpcReq\x1a\x14.test.HelloGrpcReply\"\x00\x12\x41\n\x0fshow_detail_msg\x12\x12.test.HelloTestReq\x1a\x14.test.HelloTestReply\"\x00(\x01\x30\x01\x12=\n\x0bsend_stream\x12\x13.test.SendStreamReq\x1a\x15.test.SendStreamReply\"\x00\x30\x01\x12=\n\x0brecv_stream\x12\x13.test.RecvStreamReq\x1a\x15.test.RecvStreamReply\"\x00(\x01\x62\x06proto3'
 )
 
 
@@ -328,6 +328,70 @@ _SENDSTREAMREPLY = _descriptor.Descriptor(
   serialized_end=435,
 )
 
+
+_RECVSTREAMREQ = _descriptor.Descriptor(
+  name='RecvStreamReq',
+  full_name='test.RecvStreamReq',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='data', full_name='test.RecvStreamReq.data', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=437,
+  serialized_end=466,
+)
+
+
+_RECVSTREAMREPLY = _descriptor.Descriptor(
+  name='RecvStreamReply',
+  full_name='test.RecvStreamReply',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='test.RecvStreamReply.result', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=468,
+  serialized_end=501,
+)
+
 _HELLOTESTREQ_DETAILENTRY.fields_by_name['value'].message_type = _DETAILVALUE
 _HELLOTESTREQ_DETAILENTRY.containing_type = _HELLOTESTREQ
 _HELLOTESTREQ.fields_by_name['detail'].message_type = _HELLOTESTREQ_DETAILENTRY
@@ -338,6 +402,8 @@ DESCRIPTOR.message_types_by_name['DetailValue'] = _DETAILVALUE
 DESCRIPTOR.message_types_by_name['HelloTestReply'] = _HELLOTESTREPLY
 DESCRIPTOR.message_types_by_name['SendStreamReq'] = _SENDSTREAMREQ
 DESCRIPTOR.message_types_by_name['SendStreamReply'] = _SENDSTREAMREPLY
+DESCRIPTOR.message_types_by_name['RecvStreamReq'] = _RECVSTREAMREQ
+DESCRIPTOR.message_types_by_name['RecvStreamReply'] = _RECVSTREAMREPLY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 HelloGrpcReq = _reflection.GeneratedProtocolMessageType('HelloGrpcReq', (_message.Message,), {
@@ -397,6 +463,20 @@ SendStreamReply = _reflection.GeneratedProtocolMessageType('SendStreamReply', (_
   })
 _sym_db.RegisterMessage(SendStreamReply)
 
+RecvStreamReq = _reflection.GeneratedProtocolMessageType('RecvStreamReq', (_message.Message,), {
+  'DESCRIPTOR' : _RECVSTREAMREQ,
+  '__module__' : 'hello_world_pb2'
+  # @@protoc_insertion_point(class_scope:test.RecvStreamReq)
+  })
+_sym_db.RegisterMessage(RecvStreamReq)
+
+RecvStreamReply = _reflection.GeneratedProtocolMessageType('RecvStreamReply', (_message.Message,), {
+  'DESCRIPTOR' : _RECVSTREAMREPLY,
+  '__module__' : 'hello_world_pb2'
+  # @@protoc_insertion_point(class_scope:test.RecvStreamReply)
+  })
+_sym_db.RegisterMessage(RecvStreamReply)
+
 
 _HELLOTESTREQ_DETAILENTRY._options = None
 
@@ -407,8 +487,8 @@ _HELLOWORLD = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=438,
-  serialized_end=636,
+  serialized_start=504,
+  serialized_end=765,
   methods=[
   _descriptor.MethodDescriptor(
     name='show_msg',
@@ -437,6 +517,16 @@ _HELLOWORLD = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_SENDSTREAMREQ,
     output_type=_SENDSTREAMREPLY,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='recv_stream',
+    full_name='test.HelloWorld.recv_stream',
+    index=3,
+    containing_service=None,
+    input_type=_RECVSTREAMREQ,
+    output_type=_RECVSTREAMREPLY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

@@ -6,6 +6,7 @@ service HelloWorld{
     rpc show_msg(HelloGrpcReq) returns (HelloGrpcReply) {}
     rpc show_detail_msg(stream HelloTestReq) returns (stream HelloTestReply) {}
     rpc send_stream(SendStreamReq) returns (stream SendStreamReply) {}
+    rpc recv_stream(stream RecvStreamReq) returns (RecvStreamReply) {}
 }
 
 // 传输方式
@@ -42,5 +43,13 @@ message SendStreamReq {
 }
 
 message SendStreamReply {
+    string result = 1;
+}
+
+message RecvStreamReq {
+    string data = 1;
+}
+
+message RecvStreamReply {
     string result = 1;
 }

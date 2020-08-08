@@ -29,6 +29,11 @@ class HelloWorldStub(object):
                 request_serializer=hello__world__pb2.SendStreamReq.SerializeToString,
                 response_deserializer=hello__world__pb2.SendStreamReply.FromString,
                 )
+        self.recv_stream = channel.stream_unary(
+                '/test.HelloWorld/recv_stream',
+                request_serializer=hello__world__pb2.RecvStreamReq.SerializeToString,
+                response_deserializer=hello__world__pb2.RecvStreamReply.FromString,
+                )
 
 
 class HelloWorldServicer(object):
@@ -52,6 +57,12 @@ class HelloWorldServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def recv_stream(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_HelloWorldServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -69,6 +80,11 @@ def add_HelloWorldServicer_to_server(servicer, server):
                     servicer.send_stream,
                     request_deserializer=hello__world__pb2.SendStreamReq.FromString,
                     response_serializer=hello__world__pb2.SendStreamReply.SerializeToString,
+            ),
+            'recv_stream': grpc.stream_unary_rpc_method_handler(
+                    servicer.recv_stream,
+                    request_deserializer=hello__world__pb2.RecvStreamReq.FromString,
+                    response_serializer=hello__world__pb2.RecvStreamReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -125,5 +141,21 @@ class HelloWorld(object):
         return grpc.experimental.unary_stream(request, target, '/test.HelloWorld/send_stream',
             hello__world__pb2.SendStreamReq.SerializeToString,
             hello__world__pb2.SendStreamReply.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def recv_stream(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_unary(request_iterator, target, '/test.HelloWorld/recv_stream',
+            hello__world__pb2.RecvStreamReq.SerializeToString,
+            hello__world__pb2.RecvStreamReply.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)
