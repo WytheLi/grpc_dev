@@ -12,14 +12,14 @@ import hello_world_pb2_grpc as pb2_grpc
 
 
 def func():
-    # for j in range(10):
-    #     time.sleep(1)
-    #     data = str(random.random())
-    #     yield pb2.RecvStreamReq(data=data)
-    while 1:
+    for j in range(10):
         time.sleep(1)
         data = str(random.random())
         yield pb2.RecvStreamReq(data=data)
+    # while 1:
+    #     time.sleep(1)
+    #     data = str(random.random())
+    #     yield pb2.RecvStreamReq(data=data)
 
 
 def run():
@@ -37,8 +37,12 @@ def run():
     # for item in response:
     #     print(item.result)
 
-    response = client.recv_stream(func())
-    print(response.result)
+    # response = client.recv_stream(func())
+    # print(response.result)
+
+    response = client.double_stream(func(), timeout=3)
+    for res in response:
+        print('service send data: %s' % res.result)
 
 
 if __name__ == '__main__':

@@ -39,6 +39,12 @@ class HelloWorld(pb2_grpc.HelloWorldServicer):
             print(data)
             return pb2.RecvStreamReply(result='ok')
 
+    def double_stream(self, request_iterator, context):
+        for request in request_iterator:
+            data = request.data
+            print('service recv data: %s' % data)
+            yield pb2.DoubleStreamReply(result=data)
+
 
 def run():
     grpc_server = grpc.server(

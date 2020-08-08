@@ -34,6 +34,11 @@ class HelloWorldStub(object):
                 request_serializer=hello__world__pb2.RecvStreamReq.SerializeToString,
                 response_deserializer=hello__world__pb2.RecvStreamReply.FromString,
                 )
+        self.double_stream = channel.stream_stream(
+                '/test.HelloWorld/double_stream',
+                request_serializer=hello__world__pb2.DoubleStreamReq.SerializeToString,
+                response_deserializer=hello__world__pb2.DoubleStreamReply.FromString,
+                )
 
 
 class HelloWorldServicer(object):
@@ -63,6 +68,12 @@ class HelloWorldServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def double_stream(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_HelloWorldServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -85,6 +96,11 @@ def add_HelloWorldServicer_to_server(servicer, server):
                     servicer.recv_stream,
                     request_deserializer=hello__world__pb2.RecvStreamReq.FromString,
                     response_serializer=hello__world__pb2.RecvStreamReply.SerializeToString,
+            ),
+            'double_stream': grpc.stream_stream_rpc_method_handler(
+                    servicer.double_stream,
+                    request_deserializer=hello__world__pb2.DoubleStreamReq.FromString,
+                    response_serializer=hello__world__pb2.DoubleStreamReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -157,5 +173,21 @@ class HelloWorld(object):
         return grpc.experimental.stream_unary(request_iterator, target, '/test.HelloWorld/recv_stream',
             hello__world__pb2.RecvStreamReq.SerializeToString,
             hello__world__pb2.RecvStreamReply.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def double_stream(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_stream(request_iterator, target, '/test.HelloWorld/double_stream',
+            hello__world__pb2.DoubleStreamReq.SerializeToString,
+            hello__world__pb2.DoubleStreamReply.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)
