@@ -19,12 +19,34 @@ class HelloWorldStub(object):
                 request_serializer=hello__world__pb2.HelloGrpcReq.SerializeToString,
                 response_deserializer=hello__world__pb2.HelloGrpcReply.FromString,
                 )
+        self.show_detail_msg = channel.stream_stream(
+                '/test.HelloWorld/show_detail_msg',
+                request_serializer=hello__world__pb2.HelloTestReq.SerializeToString,
+                response_deserializer=hello__world__pb2.HelloTestReply.FromString,
+                )
+        self.send_stream = channel.unary_stream(
+                '/test.HelloWorld/send_stream',
+                request_serializer=hello__world__pb2.SendStreamReq.SerializeToString,
+                response_deserializer=hello__world__pb2.SendStreamReply.FromString,
+                )
 
 
 class HelloWorldServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def show_msg(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def show_detail_msg(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def send_stream(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -37,6 +59,16 @@ def add_HelloWorldServicer_to_server(servicer, server):
                     servicer.show_msg,
                     request_deserializer=hello__world__pb2.HelloGrpcReq.FromString,
                     response_serializer=hello__world__pb2.HelloGrpcReply.SerializeToString,
+            ),
+            'show_detail_msg': grpc.stream_stream_rpc_method_handler(
+                    servicer.show_detail_msg,
+                    request_deserializer=hello__world__pb2.HelloTestReq.FromString,
+                    response_serializer=hello__world__pb2.HelloTestReply.SerializeToString,
+            ),
+            'send_stream': grpc.unary_stream_rpc_method_handler(
+                    servicer.send_stream,
+                    request_deserializer=hello__world__pb2.SendStreamReq.FromString,
+                    response_serializer=hello__world__pb2.SendStreamReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -61,5 +93,37 @@ class HelloWorld(object):
         return grpc.experimental.unary_unary(request, target, '/test.HelloWorld/show_msg',
             hello__world__pb2.HelloGrpcReq.SerializeToString,
             hello__world__pb2.HelloGrpcReply.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def show_detail_msg(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_stream(request_iterator, target, '/test.HelloWorld/show_detail_msg',
+            hello__world__pb2.HelloTestReq.SerializeToString,
+            hello__world__pb2.HelloTestReply.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def send_stream(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/test.HelloWorld/send_stream',
+            hello__world__pb2.SendStreamReq.SerializeToString,
+            hello__world__pb2.SendStreamReply.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)

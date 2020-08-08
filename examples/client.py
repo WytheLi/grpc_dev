@@ -11,11 +11,16 @@ import hello_world_pb2_grpc as pb2_grpc
 def run():
     conn = grpc.insecure_channel('localhost:50051')
     client = pb2_grpc.HelloWorldStub(channel=conn)
-    response = client.show_msg(pb2.HelloGrpcReq(
-        name='willi',
-        age=23
+    # response = client.show_msg(pb2.HelloGrpcReq(
+    #     name='willi',
+    #     age=23
+    # ))
+    # print(response.result)
+    response = client.send_stream(pb2.SendStreamReq(
+        data='item1'
     ))
-    print(response.result)
+    for item in response:
+        print(item.result)
 
 
 if __name__ == '__main__':

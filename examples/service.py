@@ -4,6 +4,7 @@
 # @Email   : willi168@163.com
 # @Description:
 import logging
+import time
 from concurrent import futures
 
 import grpc
@@ -18,6 +19,19 @@ class HelloWorld(pb2_grpc.HelloWorldServicer):
 
         result = 'My name is %s, i am %s years old!' % (name, age)
         return pb2.HelloGrpcReply(result=result)
+
+    def send_stream(self, request, context):
+        index = 0
+        while context.is_active():
+            data = request.data
+
+            if data == 'close':
+                print('data is close, request will cancel')
+                context.cancel()    # 服务器关闭连接
+
+            time.sleep(1)
+            index += 1
+            yield pb2.SendStreamReply(result='send %d %s' % (index, data))
 
 
 def run():
