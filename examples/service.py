@@ -12,6 +12,36 @@ import hello_world_pb2 as pb2
 import hello_world_pb2_grpc as pb2_grpc
 
 
+def _abort(code, detail):
+    def terminate(ignored_request, context):
+        context.abort(code, detail)
+    return grpc.unary_unary_rpc_method_handler(terminate)
+
+
+# 拦截器
+class SingleInterceptor(grpc.ServerInterceptor):
+    def __init__(self, key, value, code, detail):
+        self.key = key
+        self.value = value
+        self._abort = _abort(code, detail)
+
+    def intercept_service(self, continuation, handler_call_details):
+        """
+
+        Args:
+            continuation: 函数执行器
+            handler_call_details:  metadata
+
+        Returns:
+
+        """
+        headers = dict(handler_call_details.invocation_metadata)
+        # if (self.key, self.value) not in handler_call_details.invocation_metadata:
+        if headers.get(self.key) != self.value:
+            return self._abort
+        return continuation(handler_call_details)
+
+
 class HelloWorld(pb2_grpc.HelloWorldServicer):
     def show_msg(self, request, context):
         name = request.name
@@ -58,9 +88,12 @@ class HelloWorld(pb2_grpc.HelloWorldServicer):
 
 
 def run():
+    # 实例化拦截器
+    validator = SingleInterceptor('name', 'root', grpc.StatusCode.UNAUTHENTICATED, 'Access denined')
     grpc_server = grpc.server(
         futures.ThreadPoolExecutor(max_workers=10),
         # compression=grpc.Compression.Gzip,   # 全局设置响应压缩
+        interceptors=(validator, ),
         options=[   # 传输最大值的设置
             ('grpc.max_send_message_length', 50 * 1024 * 1024),
             ('grpc.max_receive_message_length', 50 * 1024 * 1024)

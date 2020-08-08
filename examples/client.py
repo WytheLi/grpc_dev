@@ -29,14 +29,16 @@ def run():
         response, call = client.show_msg.with_call(pb2.HelloGrpcReq(
             name='willi',
             age=23
-        ), metadata=(('client_key', 'client_value'),),
+        ), metadata=(('name', 'root'),),
         compression=grpc.Compression.Gzip)
         print(response.result)
 
         headers = call.trailing_metadata()
         print(headers[0].key, headers[0].value)
     except Exception as e:
-        print(e.code(), e.details())
+        print(dir(e))
+        if 'code' in dir(e) and 'details' in dir(e):
+            print(e.code(), e.details())
 
     # response = client.send_stream(pb2.SendStreamReq(
     #     data='item1'
