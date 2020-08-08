@@ -26,11 +26,14 @@ def run():
     conn = grpc.insecure_channel('localhost:50051')
     client = pb2_grpc.HelloWorldStub(channel=conn)
     try:
-        response = client.show_msg(pb2.HelloGrpcReq(
-            name='',
+        response, call = client.show_msg.with_call(pb2.HelloGrpcReq(
+            name='willi',
             age=23
-        ))
+        ), metadata=(('client_key', 'client_value'),))
         print(response.result)
+
+        headers = call.trailing_metadata()
+        print(headers[0].key, headers[0].value)
     except Exception as e:
         print(e.code(), e.details())
 

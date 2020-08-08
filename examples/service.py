@@ -22,6 +22,10 @@ class HelloWorld(pb2_grpc.HelloWorldServicer):
             context.set_details('缺少必要参数！')
             raise context
 
+        headers = context.invocation_metadata()
+        print(headers[0].key, headers[0].value)
+        context.set_trailing_metadata((('key1', 'value1'), ('key2', 'value2')))
+
         result = 'My name is %s, i am %s years old!' % (name, age)
         return pb2.HelloGrpcReply(result=result)
 
