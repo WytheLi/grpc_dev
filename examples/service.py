@@ -17,6 +17,11 @@ class HelloWorld(pb2_grpc.HelloWorldServicer):
         name = request.name
         age = request.age
 
+        if not all([name, age]):
+            context.set_code(grpc.StatusCode.CANCELLED)
+            context.set_details('缺少必要参数！')
+            raise context
+
         result = 'My name is %s, i am %s years old!' % (name, age)
         return pb2.HelloGrpcReply(result=result)
 

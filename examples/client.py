@@ -25,11 +25,14 @@ def func():
 def run():
     conn = grpc.insecure_channel('localhost:50051')
     client = pb2_grpc.HelloWorldStub(channel=conn)
-    # response = client.show_msg(pb2.HelloGrpcReq(
-    #     name='willi',
-    #     age=23
-    # ))
-    # print(response.result)
+    try:
+        response = client.show_msg(pb2.HelloGrpcReq(
+            name='',
+            age=23
+        ))
+        print(response.result)
+    except Exception as e:
+        print(e.code(), e.details())
 
     # response = client.send_stream(pb2.SendStreamReq(
     #     data='item1'
@@ -40,9 +43,9 @@ def run():
     # response = client.recv_stream(func())
     # print(response.result)
 
-    response = client.double_stream(func(), timeout=3)
-    for res in response:
-        print('service send data: %s' % res.result)
+    # response = client.double_stream(func(), timeout=3)
+    # for res in response:
+    #     print('service send data: %s' % res.result)
 
 
 if __name__ == '__main__':
